@@ -11,15 +11,7 @@ namespace MarsQA1.MarsQASpecflow
     [Binding]
     public  class LoginStepDefs
     {
-        IWebDriver driver = new ChromeDriver();
-
-        public void TestInitialize()
-   
-        {            
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-        }  
-        
+        readonly IWebDriver driver = new ChromeDriver();        
 
         [Given(@"I login to the portal")]
         public void GivenILoginToThePortal()

@@ -13,6 +13,7 @@ namespace MarsQA1.PageObjects
         public AddLanguage(IWebDriver driver)
         {
             this.driver = driver;
+            driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
@@ -26,6 +27,7 @@ namespace MarsQA1.PageObjects
             langDetails.Click();
 
             //add first language
+            Thread.Sleep(5000);
             driver.FindElement(By.XPath("//input[@placeholder='Add Language']")).SendKeys("English");
 
             driver.FindElement(By.XPath("//select/option[@value='Basic']")).Click();

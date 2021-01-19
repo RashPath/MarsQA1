@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using TechTalk.SpecFlow;
 
 namespace MarsQA1.MarsQASpecflow
@@ -13,18 +14,9 @@ namespace MarsQA1.MarsQASpecflow
     [Binding]
     public class Languagesteps
     {
-        IWebDriver driver;
+        readonly IWebDriver driver = new ChromeDriver();
 
-        [BeforeScenario]
-
-        public void Setup()
-        {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-        }
-
-
+        
         [Given(@"I signin to the portal by entering the login details")]
         public void GivenISigninToThePortalByEnteringTheLoginDetails()
         {
@@ -48,9 +40,11 @@ namespace MarsQA1.MarsQASpecflow
         public void ThenMyEntriesAreSavedAndAreDisplayedOnThePage()
         {
             //verify that the 'saved' message is displayed
+            Thread.Sleep(3000);
             var Langsave = driver.FindElement(By.XPath("//td[text() = 'English']"));
             Assert.IsTrue(Langsave.Displayed, "the value for message is not present");
 
+            driver.Close();
         }
 
         [AfterScenario]

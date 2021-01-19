@@ -15,13 +15,8 @@ namespace MarsQA1.MarsQASpecflow
     public class Descstepdefs
     {
         readonly IWebDriver driver = new ChromeDriver();
-
-        public void Setup()
-        {
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-        }
-
+                       
+        
         [Given(@"I login to the portal and add the credentials")]
         public void GivenILoginToThePortalAndAddTheCredentials()
         {
@@ -46,8 +41,12 @@ namespace MarsQA1.MarsQASpecflow
         {
             //verify that the 'saved' message is displayed
             Thread.Sleep(3000);
-            var isdescdisplay = driver.FindElement(By.XPath("//span[text() = 'I am a tester']")).Text;
-            Assert.IsTrue(isdescdisplay.Displayed);
+            var isdescpresent = driver.FindElement(By.XPath("//span[contains(text(),'I am a tester')]"));
+            Assert.IsTrue(isdescpresent.Displayed, "the value for name is not present");
+            driver.Close();
+            //var profilePage = new ProfPage(driver);
+            //var descdetail = profilePage.verifyDescDetails();
+            //Assert.That(descdetail, Does.Contain("I am a tester"));
         }
 
         public void CloseDriver()

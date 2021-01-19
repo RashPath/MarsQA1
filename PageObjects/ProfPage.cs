@@ -1,12 +1,13 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
 namespace MarsQA1.PageObjects
-{ 
+{
     public class ProfPage : ProfPageBase
     {
         readonly IWebDriver driver;
@@ -14,6 +15,8 @@ namespace MarsQA1.PageObjects
         public ProfPage(IWebDriver driver)
         {
             this.driver = driver;
+            driver.Manage().Window.Maximize();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
         public void Profile1()
@@ -33,13 +36,13 @@ namespace MarsQA1.PageObjects
             var desc1 = driver.FindElement(By.XPath("//textarea[@name='value']"));
             desc1.SendKeys("I am a tester");
 
-          //  Assert.AreEqual("I am a tester", desc1.Text);
-
             //save the description
             driver.FindElement(By.XPath("//button[@class='ui teal button' and @type='button']")).Click();
         }
     }
 
 }
+
+
 
 

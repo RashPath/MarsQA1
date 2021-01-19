@@ -15,6 +15,7 @@ namespace MarsQA1.PageObjects
         public LoginPage(IWebDriver driver)
         {
             this.driver = driver;
+            driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 

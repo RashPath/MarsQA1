@@ -2,10 +2,8 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace MarsQA1.MarsQASpecflow
@@ -13,13 +11,8 @@ namespace MarsQA1.MarsQASpecflow
     [Binding]
     public class Detailsteps
     {
-        IWebDriver driver = new ChromeDriver();
-        public void Setup()
-        {
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-        }
-
+        readonly IWebDriver driver = new ChromeDriver();
+        
         [Given(@"I signin to the portal")]
         public void GivenISigninToThePortal()
         {
@@ -42,9 +35,25 @@ namespace MarsQA1.MarsQASpecflow
         [Then(@"The options are saved and are displayed on the page")]
         public void ThenTheOptionsAreSavedAndAreDisplayedOnThePage()
         {
-            //verify that the 'saved' message is displayed
-            var optionsave = driver.FindElement(By.XPath("//div[text() = 'Availability updated']"));
+            //verify that the 'saved' options are displayed - assert one of the displays
+
+            //explicit wait
+            var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
+            wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+
+            var optionsave = driver.FindElement(By.XPath("//span/select/option[2][contains(text(), 'Part Time')]"));
             Assert.IsTrue(optionsave.Displayed, "the value for message is not present");
+
+            //Thread.Sleep(3000);
+            //var optionsave2 = driver.FindElement(By.XPath("//span[contains(text(), 'As needed')]"));
+            //Assert.IsTrue(optionsave2.Displayed, "the value for message is not present");
+
+            //Thread.Sleep(3000);
+            //var optionsave3 = driver.FindElement(By.XPath("//span[contains(text(), 'More than $1000 per month')]"));
+            //Assert.IsTrue(optionsave3.Displayed, "the value for message is not present");
+
+            
+
             driver.Close();
         }
 
